@@ -159,7 +159,9 @@ _.extend = function (obj, ...args) {
   // TODO: 여기에 코드를 작성합니다.
   let result = obj;
   _.each(args, function(item) {
-    Object.assign(result, item);
+    _.each(item, function(val, key) {
+      result[key] = val;
+    }) 
   })
   return result;
 };
@@ -169,8 +171,11 @@ _.defaults = function (obj, ...args) {
   // TODO: 여기에 코드를 작성합니다.
   let result = obj;
   _.each(args, function(item) {
-    Object.assign(item, result);
-    Object.assign(result, item);
+    _.each(item, function(val, key) {
+      if(!(key in result)) {
+        result[key] = val;
+      }
+    })
   })
   return result;
 };
@@ -203,6 +208,7 @@ _.zip = function (...arrs) {
       max = el;
     }
   }
+
   _.each(arrs, function(arr) {
     for(let i=0; i<max.length; i++) {
       if(!arr[i]) {
@@ -231,6 +237,7 @@ _.zipStrict = function (...arrs) {
       min = el;
     }
   }
+  
   _.each(arrs, function(arr) {
     for(let i=0; i<min.length; i++) {
       if(!Array.isArray(result[i])) {
@@ -254,31 +261,46 @@ _.zipStrict = function (...arrs) {
 //  const result = _.intersection(set1, set2);
 //  console.log(result) // --> ['e', 'c']
 //                      // 첫 번째 배열에 'e'가 먼저 등장
-_.intersection = function (...arrs) {
+_.intersection = function (base, ...arrs) {
   // TODO: 여기에 코드를 작성합니다.
-  let max = [];
-  for(let el of arrs) {
-    if(el.length > max.length) {
-      max = el;
-    }
-  }
+// _.intersection = function(...arrs) /
+  // let max = [];
+  // for(let el of arrs) {
+  //   if(el.length > max.length) {
+  //     max = el;
+  //   }
+  // }
 
-  let obj = {};
-  _.each(arrs, function(arr) {
-    for(let el of arr) {
-      if(!(el in obj)) {
-        obj[el] = 0;
-      }
-      obj[el]++;
-    }
-  });
+  // let obj = {};
+  // _.each(arrs, function(arr) {
+  //   for(let el of arr) {
+  //     if(!(el in obj)) {
+  //       obj[el] = 0;
+  //     }
+  //     obj[el]++;
+  //   }
+  // });
+
+  // let result = [];
+  // for(let key in obj) {
+  //   if(obj[key] === arrs.length) {
+  //     result.push(key);
+  //   }
+  // }
+
+  // return result;
+// ----------------------------------- 위의 코드는 '1' 과 1을 식별하지 못한다.
 
   let result = [];
-  for(let key in obj) {
-    if(obj[key] === max.length) {
-      result.push(key);
+  _.each(base, function(baseEl) {
+    const check = _.every(arrs, function(arr) {
+      return _.includes(arr, baseEl);
+    })
+
+    if(check) {
+      result.push(baseEl);
     }
-  }
+  })
 
   return result;
 };
@@ -292,8 +314,20 @@ _.intersection = function (...arrs) {
 //  const set2 = ['b', 'c', 'd'];
 //  const result = _.difference(set1, set2);
 //  console.log(result) // --> ['a']
-_.difference = function () {
+_.difference = function (base, ...arrs) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = [];
+  _.each(base, function(baseEl) {
+    const check = _.some(arrs, function(arr) {
+      return _.includes(arr, baseEl);
+    })
+
+    if(!check) {
+      result.push(baseEl);
+    }
+  })
+
+  return result;
 };
 
 // _.sortBy는 배열의 각 요소에 함수 transform을 적용하여 얻은 결과를 기준으로 정렬합니다.
@@ -336,6 +370,24 @@ _.difference = function () {
 //  학습 우선순위: bubble sort, insertion sort, quick sort, merge sort, radix sort
 _.sortBy = function (arr, transform, order) {
   // TODO: 여기에 코드를 작성합니다.
+  if(!order) {
+    order = 1;
+  }
+  if(!transform) {
+    transform = _.identity;
+  }
+
+  let clone = _.slice(arr);
+
+  clone.sort((a, b) => {
+    if(transform(a) > transform(b)) {
+      return 1 * order;
+    } else if(transform(a) < transform(b)) {
+      return -1 * order;
+    }
+  })
+
+  return clone;
 };
 
 // _.shuffle은 배열 요소의 순서가 랜덤하게 변경된 새로운 배열을 리턴합니다.
