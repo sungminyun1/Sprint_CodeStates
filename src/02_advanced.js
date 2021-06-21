@@ -33,17 +33,27 @@
 // _.once가 리턴하는 함수를 여러 번 호출해도 callback 함수는 한 번 이상 호출되지 않습니다.
 _.once = function (func) {
   // TODO: 여기에 코드를 작성합니다.
+  let check = false;
+  let result;
 
-  return function () {
+  return function (...args) {
     // TIP: arguments 키워드 혹은, spread operator를 사용하세요.
+    if(!check) {
+      check = true;
+      result = func(...args);
+    }
+    return result;
   };
 };
 
 // _.delay는 입력으로 전달되는 시간(ms, 밀리초)후 callback 함수를 함께 전달되는 (임의의 개수의) 인자와 함께 실행합니다.
 // 예를 들어, _.delay(func, 500, 'a', 'b')의 결과로 '최소' 500m가 지난 이후에 func('a', 'b')가 호출됩니다.
 // 필요하면, Chapter - 비동기를 예습하세요.
-_.delay = function (func, wait) {
+_.delay = function (func, wait, ...args) {
   // TODO: 여기에 코드를 작성합니다.
+  setTimeout(function() {
+    return func(...args)
+  }, wait);
 };
 
 /**
@@ -57,6 +67,13 @@ _.delay = function (func, wait) {
 // 입력으로 전달되는 배열의 요소는 모두 primitive value라고 가정합니다.
 _.includes = function (arr, target) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = false;
+  _.each(arr, function(item) {
+    if(item === target) {
+      result = true;
+    }
+  })
+  return result;
 };
 
 // _.every는 배열의 모든 요소가 test 함수(iteratee)를 통과하면 true를, 그렇지 않은 경우 false를 리턴합니다.
@@ -66,6 +83,23 @@ _.includes = function (arr, target) {
 // 빈 배열을 입력받은 경우, true를 리턴해야 합니다. (공허하게 참, vacantly true)
 _.every = function (arr, iteratee) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = [];
+  _.each(arr, function(item) {
+    if(iteratee) {
+      if(iteratee(item)) {
+        result.push(item);
+      }
+    } else {
+      if(item) {
+        result.push(item);
+      }
+    }
+    
+  })
+  if(result.length === arr.length) {
+    return true;
+  }
+  return false;
 };
 
 // _.some은 배열의 요소 중 하나라도 test 함수(iteratee)를 통과하면 true를, 그렇지 않은 경우 false를 리턴합니다.
@@ -73,6 +107,23 @@ _.every = function (arr, iteratee) {
 // 그 외 조건은 앞서 _.every와 동일합니다.
 _.some = function (arr, iteratee) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = [];
+  _.each(arr, function(item) {
+    if(iteratee) {
+      if(iteratee(item)) {
+        result.push(item);
+      }
+    } else {
+      if(item) {
+        result.push(item);
+      }
+    }
+    
+  })
+  if(result.length > 0) {
+    return true;
+  }
+  return false;
 };
 
 /**
@@ -104,13 +155,24 @@ _.some = function (arr, iteratee) {
 // spread syntax 또는 arguments 객체를 사용해야 합니다.
 // 함수의 시그니쳐(함수의 입력과 출력, 함수의 모양)를 적절하게 변형하시기 바랍니다.
 // _.each를 사용해서 구현합니다.
-_.extend = function () {
+_.extend = function (obj, ...args) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = obj;
+  _.each(args, function(item) {
+    Object.assign(result, item);
+  })
+  return result;
 };
 
 // _.defaults는 _.extend와 비슷하게 동작하지만, 이미 존재하는 속성(key)을 덮어쓰지 않습니다.
-_.defaults = function () {
+_.defaults = function (obj, ...args) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = obj;
+  _.each(args, function(item) {
+    Object.assign(item, result);
+    Object.assign(result, item);
+  })
+  return result;
 };
 
 /**
@@ -132,15 +194,54 @@ _.defaults = function () {
 //  const arr2 = [1,2];
 //  const result = _.zip(arr1, arr2)
 //  console.log(result); // --> [['a',1], ['b',2], ['c', undefined]]
-_.zip = function () {
+_.zip = function (...arrs) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = [];
+  let max = [];
+  for(let el of arrs) {
+    if(el.length > max.length) {
+      max = el;
+    }
+  }
+  _.each(arrs, function(arr) {
+    for(let i=0; i<max.length; i++) {
+      if(!arr[i]) {
+        arr[i] = undefined;
+      }
+      if(!Array.isArray(result[i])) {
+        result[i] = [arr[i]];
+      } else {
+        result[i].push(arr[i]);
+      }
+    }
+  })
+
+  return result;
 };
 
 // _.zipStrict은 _.zip과 비슷하게 동작하지만,
 // 최종적으로 리턴되는 배열의 각 요소의 길이는 입력으로 전달되는 배열 중 가장 '짧은' 배열의 길이로 통일됩니다.
 // 그 외 조건은 앞서 _.zip과 동일합니다.
-_.zipStrict = function () {
+_.zipStrict = function (...arrs) {
   // TODO: 여기에 코드를 작성합니다.
+  let result = [];
+  let min = [1,2,3,4,5,6];  // 임의의 긴 배열을 할당
+  for(let el of arrs) {
+    if(el.length < min.length) {
+      min = el;
+    }
+  }
+  _.each(arrs, function(arr) {
+    for(let i=0; i<min.length; i++) {
+      if(!Array.isArray(result[i])) {
+        result[i] = [arr[i]];
+      } else {
+        result[i].push(arr[i]);
+      }
+    }
+  })
+
+  return result;
 };
 
 // _.intersection은 여러 개의 배열을 입력받아, 교집합 배열을 리턴합니다.
@@ -153,8 +254,33 @@ _.zipStrict = function () {
 //  const result = _.intersection(set1, set2);
 //  console.log(result) // --> ['e', 'c']
 //                      // 첫 번째 배열에 'e'가 먼저 등장
-_.intersection = function () {
+_.intersection = function (...arrs) {
   // TODO: 여기에 코드를 작성합니다.
+  let max = [];
+  for(let el of arrs) {
+    if(el.length > max.length) {
+      max = el;
+    }
+  }
+
+  let obj = {};
+  _.each(arrs, function(arr) {
+    for(let el of arr) {
+      if(!(el in obj)) {
+        obj[el] = 0;
+      }
+      obj[el]++;
+    }
+  });
+
+  let result = [];
+  for(let key in obj) {
+    if(obj[key] === max.length) {
+      result.push(key);
+    }
+  }
+
+  return result;
 };
 
 // _.difference는 여러 개의 배열을 입력받아, 차집합 배열을 리턴합니다.
