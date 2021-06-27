@@ -387,7 +387,7 @@ _.sortBy = function (arr, transform, order) {
     }
   })
 
-  return clone;
+  return clone
 };
 
 // _.shuffle은 배열 요소의 순서가 랜덤하게 변경된 새로운 배열을 리턴합니다.
