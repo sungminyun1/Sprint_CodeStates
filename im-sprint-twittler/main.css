@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+#greeting {
+  font-size: 2em;
+  font-family: sans-serif;
+  font-weight: bold;
+  
+  color: white;
+  
+  text-shadow: 0 0 10px #333;
+  text-align: center;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+/* -------------------------------------------------- */
+#column1 {
+  background-color: rgb(195, 202, 143);
+  border: 1px solid black;
+  margin: 16px;
+  padding: 10px;
+}
+
+#userName_input {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+#message_input {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+#tweet {
+  width: 50px;
+  height: 30px;
+}
+
+h3 {
+  margin: auto;
+  color: white;
+}
+
+#messages {
+  padding: 0px 15px;
+
+}
+
+/*---------------------------------------*/
+#column2 {
+  border: 1px solid black ;
+  margin: 16px;
+  background-color: rgb(230, 235, 194);
+  padding-bottom: 30px;
+}
+
+#refreshBtn {
+  margin: 15px;
+  width: 150px;
+  height: 30px;
+  display: flex;
+  padding-top: 5px;
+}
+
+#refreshImg {
+  width: 25px;
+  height: 20px;
+  padding-bottom: 3px;
+}
+ul {
+  list-style: none;
+}
+
+.userComment {
+  display: flex;
+  justify-content: space-between;
+}
+.userName_writer {
+  font-weight: 800;
+}
+.userName_writer:hover {
+  color: rgb(113, 179, 241);
+  cursor: pointer;
+}
+.uploadDate {
+  font-size: 12px;
+  color:rgb(143, 147, 147);
+}
+.message {
+  font-size: 13px;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(109, 109, 109);
+  padding-bottom: 10px;
+}
+
+.message:hover {
+  color: rgb(176, 98, 184);
+  cursor: pointer;
+}
