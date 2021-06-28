@@ -19,6 +19,7 @@ export default function Main() {
       console.log('condition 상태를 변경시킵니다')
 
       // TODO:
+      setCondition({departure: departure, destination: destination});
     }
   }
 
@@ -46,7 +47,7 @@ export default function Main() {
         <h1>
           여행가고 싶을 땐, States Airline
         </h1>
-        <Search />
+        <Search onSearch={search} />
         <div className="table">
           <div className="row-header">
             <div className="col">출발</div>
