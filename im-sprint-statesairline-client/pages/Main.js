@@ -6,13 +6,24 @@ import LoadingIndicator from './component/LoadingIndicator'
 import Search from './component/Search'
 import Debug from './component/Debug'
 
-import json from '../resource/flightList'
-
 export default function Main() {
   const [condition, setCondition] = useState({
     departure: 'ICN'
   })
-  const [flightList, setFlightList] = useState(json)
+
+  const [flightList, setFlightList] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getFlight(condition)
+    .then((json) => {
+      // console.log(json);
+      setFlightList(json);
+      setIsLoading(false);
+    })
+  }, [condition])
 
   const search = ({ departure, destination }) => {
     if (condition.departure !== departure || condition.destination !== destination) {
@@ -21,17 +32,6 @@ export default function Main() {
       // TODO:
       setCondition({departure: departure, destination: destination});
     }
-  }
-
-  const filterByCondition = (flight) => {
-    let pass = true;
-    if (condition.departure) {
-      pass = pass && flight.departure === condition.departure
-    }
-    if (condition.destination) {
-      pass = pass && flight.destination === condition.destination
-    }
-    return pass;
   }
 
   global.search = search // 실행에는 전혀 지장이 없지만, 테스트를 위해 필요한 코드입니다. 이 코드는 지우지 마세요!
@@ -56,7 +56,7 @@ export default function Main() {
             <div className="col">도착 시각</div>
             <div className="col"></div>
           </div>
-          <FlightList list={flightList.filter(filterByCondition)} />
+          {isLoading ? <LoadingIndicator /> : <FlightList list={flightList} />}
         </div>
 
         <div className="debug-area">
