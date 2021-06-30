@@ -9,6 +9,9 @@ const server = http.createServer((request, response) => {
     `http request method is ${request.method}, url is ${request.url}`
   );
 
+  // console.log(response.end);
+  console.log(request);
+
   if(request.method === "OPTIONS") {
     response.writeHead(200, defaultCorsHeader);
     response.end();

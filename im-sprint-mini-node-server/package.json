@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo no test",
     "submit": "echo you don\\'t need to submit",
-    "start": "node server/basic-server.js",
+    "start": "node --inspect server/basic-server.js",
     "dev": "nodemon server/basic-server.js"
   },
   "repository": {
