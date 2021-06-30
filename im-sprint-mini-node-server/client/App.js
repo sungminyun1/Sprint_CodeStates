@@ -13,6 +13,7 @@ class App {
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json'
+        // 'Content-Type': 'text/plain'  <- Simple Requests 이기 때문에 preflight 요청이 들어가지 않는다!
       }
     })
       .then(res => res.json())

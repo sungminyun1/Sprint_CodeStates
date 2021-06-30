@@ -8,8 +8,52 @@ const server = http.createServer((request, response) => {
   console.log(
     `http request method is ${request.method}, url is ${request.url}`
   );
-  response.writeHead(200, defaultCorsHeader);
-  response.end('hello mini-server sprints');
+
+  if(request.method === "OPTIONS") {
+    response.writeHead(200, defaultCorsHeader);
+    response.end();
+  }
+
+  else if(request.method === "GET") {
+    response.writeHead(200, defaultCorsHeader);
+    response.end("Hello World");
+  }
+
+  else if(request.method === "POST") {
+
+    if(request.url === '/upper') {
+      let body = [];
+      request.on('data', (chunk) => {
+        body.push(chunk);
+      })
+      .on('end', () => {
+        body = Buffer.concat(body).toString();
+        let result = body.toUpperCase();
+        response.writeHead(201, defaultCorsHeader);
+        response.end(result);
+      });
+    }
+
+    if(request.url === '/lower') {
+      let body = [];
+      request.on('data', (chunk) => {
+        body.push(chunk);
+      })
+      .on('end', () => {
+        body = Buffer.concat(body).toString();
+        let result = body.toLowerCase();
+        response.writeHead(201, defaultCorsHeader);
+        response.end(result);
+      });
+    }
+
+  }
+
+  else {
+    response.writeHead(404, defaultCorsHeader);
+    response.end("Bad Request");
+  }
+  
 });
 
 server.listen(PORT, ip, () => {
