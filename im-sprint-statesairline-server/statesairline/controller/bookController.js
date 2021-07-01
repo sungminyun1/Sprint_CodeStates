@@ -7,6 +7,8 @@ module.exports = {
   // 전체 데이터 혹은 요청 된 flight_uuid, phone 값과 동일한 예약 데이터를 조회합니다.
   findById: async (req, res) => {
     //TODO:
+    console.log(req.query);
+
     const flight_uuid = req.query.flight_uuid;
     const phone = req.query.phone;
 
@@ -25,6 +27,8 @@ module.exports = {
   // 요청 된 예약 데이터를 저장합니다.
   create: async (req, res) => {
     //TODO: 
+    console.log(req.body);
+
     const {flight_uuid, name, phone} = req.body;
 
     const post = {
@@ -42,12 +46,15 @@ module.exports = {
   // 요청 된 phone 값과 동일한 예약 데이터를 삭제합니다.
   deleteById: async (req, res) => {
     //TODO: 
+    console.log(req.query);
+
     const phone = req.query.phone;
 
     if(phone) {
       booking = booking.filter((el) => el.phone !== phone);
+      return res.status(200).json(booking);
+    } else {
+      return res.status(404).send('Please Write Phone Number!');
     }
-  
-    return res.status(200).json(booking);
   }
 };
