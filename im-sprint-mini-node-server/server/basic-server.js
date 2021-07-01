@@ -41,9 +41,11 @@
 //     if(request.url === '/lower') {
 //       let body = [];
 //       request.on('data', (chunk) => {
+//         console.log(chunk)
 //         body.push(chunk);
 //       })
 //       .on('end', () => {
+//         console.log(Buffer);
 //         body = Buffer.concat(body).toString();
 //         let result = body.toLowerCase();
 //         response.writeHead(201, defaultCorsHeader);
@@ -86,7 +88,8 @@ app.get('/', (req, res) => {
   res.status(200).send("Hello World");
 });
 
-app.post('/upper', (req, res) => {    // <- 83번째 줄 코드를 지워야 동작 
+app.post('/upper', (req, res) => {    // <- 85번째 줄 코드를 지워야 동작 
+  console.log(req.body)
   let body = '';
   req.on('data', (chunk) => {
     body = body + chunk;
