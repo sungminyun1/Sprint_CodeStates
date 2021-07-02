@@ -17,7 +17,8 @@ module.exports = {
     }
 
     if(phone) {
-      return res.status(200).json(booking.filter((el) => el.phone === phone)[0]);
+      const filterByBooking = booking.filter((el) => el.phone === phone);
+      return res.status(200).json(filterByBooking[filterByBooking.length-1]);
     }
 
     return res.status(200).json(booking);
