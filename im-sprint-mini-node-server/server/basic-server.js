@@ -88,21 +88,14 @@ app.get('/', (req, res) => {
   res.status(200).send("Hello World");
 });
 
-app.post('/upper', (req, res) => {    // <- 85번째 줄 코드를 지워야 동작 
+app.post('/upper', (req, res) => {
   console.log(req.body)
-  let body = '';
-  req.on('data', (chunk) => {
-    body = body + chunk;
-  })
-  .on('end', () => {
-    let result = body.toUpperCase();
-    res.status(201).send(result);
-  })
+  res.status(201).json(req.body.text.toUpperCase());
 });
 
 app.post('/lower', (req, res) => {
   console.log(req.body);
-  res.status(201).send(req.body.text.toLowerCase());
+  res.status(201).json(req.body.text.toLowerCase());
 });
 
 app.listen(PORT, ip, () => {
