@@ -5,7 +5,7 @@ let booking = [];
 module.exports = {
   // [GET] /book 요청을 수행합니다.
   // 전체 데이터 혹은 요청 된 flight_uuid, phone 값과 동일한 예약 데이터를 조회합니다.
-  findById: async (req, res) => {
+  findById: (req, res) => {
     //TODO:
     console.log(req.query);
 
@@ -18,7 +18,11 @@ module.exports = {
 
     if(phone) {
       const filterByBooking = booking.filter((el) => el.phone === phone);
-      return res.status(200).json(filterByBooking[filterByBooking.length-1]);
+      if(filterByBooking.length > 0) {
+        return res.status(200).json(filterByBooking[filterByBooking.length-1]);
+      } else {
+        return res.status(404).json([]);
+      }
     }
 
     return res.status(200).json(booking);
@@ -26,7 +30,7 @@ module.exports = {
 
   // [POST] /book 요청을 수행합니다.
   // 요청 된 예약 데이터를 저장합니다.
-  create: async (req, res) => {
+  create: (req, res) => {
     //TODO: 
     console.log(req.body);
 
@@ -45,7 +49,7 @@ module.exports = {
 
   // [DELETE] /book?phone={phone} 요청을 수행합니다.
   // 요청 된 phone 값과 동일한 예약 데이터를 삭제합니다.
-  deleteById: async (req, res) => {
+  deleteById: (req, res) => {
     //TODO: 
     console.log(req.query);
 
