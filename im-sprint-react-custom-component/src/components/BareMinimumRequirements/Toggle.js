@@ -28,6 +28,7 @@ const ToggleContainer = styled.div`
     border-radius: 50%;
     background-color: #ffffff;
     transition: all ease 0.5s 0s;
+    cursor: pointer;
     // TODO : .toggle--checked 클래스가 활성화 되었을 경우의 CSS를 구현합니다.
     &.toggle--checked {
       left: 27px;

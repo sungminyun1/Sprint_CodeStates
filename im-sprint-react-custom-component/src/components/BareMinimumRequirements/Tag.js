@@ -70,6 +70,7 @@ export const Tag = () => {
   const initialTags = ['CodeStates', 'kimcoding'];
 
   const [tags, setTags] = useState(initialTags);
+
   const removeTags = (indexToRemove) => {
     // TODO : 태그를 삭제하는 메소드를 완성하세요.
     const checkFilter = tags.filter((el, index) => index !== indexToRemove);

@@ -20,16 +20,14 @@ const TabMenu = styled.ul`
     height: 3em;
     text-align: center;
     line-height: 3em;
-    transition: all ease 0.2s 0s;
+    transition: all ease 0.3s 0s;
+    cursor: pointer;
   }
 
   .focused {
     background-color: #4000c7;
     color: white;
-  }
-
-  & div.desc {
-    text-align: center;
+    cursor: pointer;
   }
 `;
 
