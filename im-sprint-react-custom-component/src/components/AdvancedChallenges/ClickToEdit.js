@@ -28,7 +28,7 @@ export const InputView = styled.div`
   }
 `;
 
-export const MyInput = ({ value, handleChange }) => {
+export const MyInput = ({ value, handleChange = () => {} }) => {
   const inputEl = useRef(null);
   const [isEditMode, setEditMode] = useState(false);
   const [newValue, setNewValue] = useState(value);
@@ -45,15 +45,18 @@ export const MyInput = ({ value, handleChange }) => {
 
   const handleClick = () => {
     // TODO : isEditMode 상태를 변경합니다.
+    setEditMode(true);
   };
 
   const handleBlur = () => {
     // TODO : Edit가 불가능한 상태로 변경합니다.
     handleChange(newValue);
+    setEditMode(false);
   };
 
   const handleInputChange = (e) => {
     // TODO : 저장된 value를 업데이트합니다.
+    setNewValue(e.target.value);
   };
 
   return (
@@ -64,11 +67,14 @@ export const MyInput = ({ value, handleChange }) => {
           value={newValue}
           ref={inputEl}
           // TODO : 포커스를 잃으면 Edit가 불가능한 상태로 변경되는 메소드가 실행되어야 합니다.
+          onBlur={handleBlur}
           // TODO : 변경 사항이 감지되면 저장된 value를 업데이트 되는 메소드가 실행되어야 합니다.
+          onChange={(event) => handleInputChange(event)}
         />
       ) : (
         <span 
         // TODO : 클릭하면 Edit가 가능한 상태로 변경되어야 합니다.
+        onClick={handleClick}
         >{newValue}</span>
       )}
     </InputBox>
