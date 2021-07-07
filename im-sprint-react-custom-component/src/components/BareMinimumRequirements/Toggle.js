@@ -39,6 +39,7 @@ const ToggleContainer = styled.div`
 const Desc = styled.div`
   // TODO : 설명 부분의 CSS를 구현합니다.
   text-align: center;
+  cursor: text;
 `;
 
 export const Toggle = () => {
@@ -52,8 +53,8 @@ export const Toggle = () => {
   return (
     <>
       <ToggleContainer onClick={toggleHandler}>
-        <div className={isOn ? "toggle-container toggle--checked" : "toggle-container"}/>
-        <div className={isOn ? "toggle-circle toggle--checked" : "toggle-circle"}/>
+        <div className={isOn ? "toggle-container toggle--checked" : "toggle-container"} />
+        <div className={isOn ? "toggle-circle toggle--checked" : "toggle-circle"} />
       </ToggleContainer>
       <Desc>{isOn ? "Toggle Switch ON" : "Toggle Switch OFF"}</Desc>
     </>

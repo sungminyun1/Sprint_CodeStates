@@ -42,6 +42,7 @@ export const InputContainer = styled.div`
     padding: 0;
     outline: none;
     font-size: 16px;
+    cursor: text;
   }
 
   > div.delete-button {
@@ -150,6 +151,7 @@ export const Autocomplete = () => {
      * 1. input값 상태인 inputValue가 빈 문자열이 되어야 합니다.
      */
     setInputVaule('');
+    setSelectedIdx(-1);
   };
 
   // Advanced Challenge: 상하 화살표 키 입력 시 dropdown 항목을 선택하고, Enter 키 입력 시 input값을 선택된 dropdown 항목의 값으로 변경하는 handleKeyUp 함수를 만들고,
@@ -161,16 +163,28 @@ export const Autocomplete = () => {
     if (event.getModifierState("Control") + event.getModifierState("Alt") + event.getModifierState("Meta") > 1) return;
 
     if(hasText) {
+
       if(event.key === 'ArrowUp' && selectedIdx >= 0) {
-        setSelectedIdx(selectedIdx - 1);
+        if(selectedIdx > 0) {
+          setSelectedIdx(selectedIdx - 1);
+        } else if(selectedIdx === 0) {
+          setSelectedIdx(options.length-1);
+        }
+        
       }
       if(event.key === 'ArrowDown' && options.length > 0) {
-        setSelectedIdx(selectedIdx + 1);
+        if(selectedIdx < options.length-1) {
+          setSelectedIdx(selectedIdx + 1);
+        } else if(selectedIdx === options.length-1) {
+          setSelectedIdx(0);
+        }
       }
+
       if(event.key === 'Enter' && selectedIdx >= 0) {
         handleInputChange(options[selectedIdx]);
         setSelectedIdx(-1);
       }
+
     } else {
       setSelectedIdx(-1);
     }

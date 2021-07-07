@@ -33,6 +33,10 @@ const TabMenu = styled.ul`
 
 const Desc = styled.div`
   text-align: center;
+
+  > p {
+    cursor: text;
+  }
 `;
 
 export const Tab = () => {

@@ -46,6 +46,9 @@ export const TagsInput = styled.div`
         background: #fff;
         cursor: pointer;
       }
+       > .tag-title {
+         cursor: text;
+       }
     }
   }
 
@@ -55,6 +58,7 @@ export const TagsInput = styled.div`
     height: 46px;
     font-size: 14px;
     padding: 4px 0 0 0;
+    cursor: text;
     :focus {
     outline: transparent;
   }
@@ -104,7 +108,7 @@ export const Tag = () => {
         <input
           className='tag-input'
           type='text'
-          onKeyUp={(event)=> {if(event.key === 'Enter') addTags(event)}}
+          onKeyUp={(event)=> event.key === 'Enter' ? addTags(event) : null}
           placeholder='Press enter to add tags'
         />
       </TagsInput>

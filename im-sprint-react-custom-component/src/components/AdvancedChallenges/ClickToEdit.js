@@ -16,6 +16,7 @@ export const InputEdit = styled.input`
   display: inline-block;
   width: 150px;
   height: 30px;
+  cursor: text;
 `;
 
 export const InputView = styled.div`
@@ -26,6 +27,11 @@ export const InputView = styled.div`
   div.view {
     margin-top: 3rem;
     color: #4000c7;
+    cursor: text;
+  }
+
+  > label {
+    cursor: text;
   }
 `;
 
