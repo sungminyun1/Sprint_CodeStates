@@ -34,6 +34,10 @@ export const InputContainer = styled.div`
     box-shadow: ${boxShadow};
   }
 
+  &.active-border {
+    border-radius: ${activeBorderRadius};
+  }
+
   > input {
     flex: 1 0 0;
     background-color: transparent;
@@ -147,7 +151,7 @@ export const Autocomplete = () => {
 
   return (
     <div className='autocomplete-wrapper'>
-      <InputContainer>
+      <InputContainer className={hasText ? "active-border" : null}>
         {/* TODO : input 엘리먼트를 작성하고 input값(value)을 state와 연결합니다. handleInputChange 함수와 input값 변경 시 호출될 수 있게 연결합니다. */}
         <input type="text" value={inputValue} onChange={(event) => handleInputChange(event.target.value)}></input>
         {/* TODO : 아래 div.delete-button 버튼을 누르면 input 값이 삭제되어 dropdown이 없어지는 handler 함수를 작성합니다. */}
@@ -159,7 +163,7 @@ export const Autocomplete = () => {
   );
 };
 
-export const DropDown = ({ options, handleComboBox }) => {
+export const DropDown = ({ options, handleComboBox = () => {} }) => {
   return (
     <DropDownContainer>
       {/* TODO : input 값에 맞는 autocomplete 선택 옵션이 보여지는 역할을 합니다. */}

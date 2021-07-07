@@ -25,6 +25,7 @@ export const InputView = styled.div`
 
   div.view {
     margin-top: 3rem;
+    color: #4000c7;
   }
 `;
 
@@ -101,7 +102,7 @@ export const ClickToEdit = () => {
         <MyInput value={age} handleChange={(newValue) => setAge(newValue)} />
       </InputView>
       <InputView>
-        <div className='view'>이름 {name} 나이 {age}</div>
+        <div className='view'>이름: {name} / 나이: {age}</div>
       </InputView>
     </>
   );
