@@ -17,7 +17,7 @@ const deselectedOptions = [
 /* TODO : 아래 CSS를 자유롭게 수정하세요. */
 const boxShadow = '0 4px 6px rgb(32 33 36 / 28%)';
 const activeBorderRadius = '1rem 1rem 0 0';
-const inactiveBorderRadius = '1rem 1rem 1rem 1rem';
+const inactiveBorderRadius = '2rem 2rem 2rem 2rem';
 
 export const InputContainer = styled.div`
   margin-top: 8rem;
@@ -26,17 +26,13 @@ export const InputContainer = styled.div`
   flex-direction: row;
   padding: 1rem;
   border: 1px solid rgb(223, 225, 229);
-  border-radius: ${inactiveBorderRadius};
+  border-radius: ${({ hasText }) => hasText ? activeBorderRadius : inactiveBorderRadius};
   z-index: 3;
-  box-shadow: 0;
+  box-shadow: ${({ hasText }) => hasText ? boxShadow : null};
 
-  &:focus-within {
+  /* &:focus-within {
     box-shadow: ${boxShadow};
-  }
-
-  &.active-border {
-    border-radius: ${activeBorderRadius};
-  }
+  } */
 
   > input {
     flex: 1 0 0;
@@ -73,6 +69,15 @@ export const DropDownContainer = styled.ul`
 
   > li {
     padding: 0 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  > .selected {
+    background-color: #ccc;
   }
 `;
 
@@ -86,6 +91,7 @@ export const Autocomplete = () => {
   const [hasText, setHasText] = useState(false);
   const [inputValue, setInputVaule] = useState('');
   const [options, setOptions] = useState(deselectedOptions);
+  const [selectedIdx, setSelectedIdx] = useState(-1);
 
   // useEffect를 아래와 같이 활용할 수도 있습니다.
   useEffect(() => {
@@ -148,28 +154,49 @@ export const Autocomplete = () => {
 
   // Advanced Challenge: 상하 화살표 키 입력 시 dropdown 항목을 선택하고, Enter 키 입력 시 input값을 선택된 dropdown 항목의 값으로 변경하는 handleKeyUp 함수를 만들고,
   // 적절한 컴포넌트에 onKeyUp 핸들러를 할당합니다. state가 추가로 필요한지 고민하고, 필요 시 state를 추가하여 제작하세요.
+  const handleOnKeyUpEvent = (event) => {
+    console.log(event.key, event.code);
+    // 환경적인 내용(?) 이기 때문에, onKeyUp 이벤트와 관련해서 항상 적어놓는 문법이라고 생각하자!
+    if (event.getModifierState("Fn") || event.getModifierState("Hyper") || event.getModifierState("OS") || event.getModifierState("Super") || event.getModifierState("Win")) return;
+    if (event.getModifierState("Control") + event.getModifierState("Alt") + event.getModifierState("Meta") > 1) return;
+
+    if(hasText) {
+      if(event.key === 'ArrowUp' && selectedIdx >= 0) {
+        setSelectedIdx(selectedIdx - 1);
+      }
+      if(event.key === 'ArrowDown' && options.length > 0) {
+        setSelectedIdx(selectedIdx + 1);
+      }
+      if(event.key === 'Enter' && selectedIdx >= 0) {
+        handleInputChange(options[selectedIdx]);
+        setSelectedIdx(-1);
+      }
+    } else {
+      setSelectedIdx(-1);
+    }
+  }
 
   return (
-    <div className='autocomplete-wrapper'>
-      <InputContainer className={hasText ? "active-border" : null}>
+    <div className='autocomplete-wrapper' onKeyUp={(event) => handleOnKeyUpEvent(event)}>
+      <InputContainer hasText={hasText}>
         {/* TODO : input 엘리먼트를 작성하고 input값(value)을 state와 연결합니다. handleInputChange 함수와 input값 변경 시 호출될 수 있게 연결합니다. */}
         <input type="text" value={inputValue} onChange={(event) => handleInputChange(event.target.value)}></input>
         {/* TODO : 아래 div.delete-button 버튼을 누르면 input 값이 삭제되어 dropdown이 없어지는 handler 함수를 작성합니다. */}
         <div className='delete-button' onClick={handleDeleteButtonClick}>&times;</div>
       </InputContainer>
       {/* TODO : input 값이 없으면 dropdown이 보이지 않아야 합니다. 조건부 렌더링을 이용해서 구현하세요. */}
-      {hasText ? <DropDown options={options} handleComboBox={(option) => handleDropDownClick(option)}/> : null}
+      {hasText ? <DropDown options={options} handleComboBox={(option) => handleDropDownClick(option)} selectedIdx={selectedIdx} /> : null}
     </div>
   );
 };
 
-export const DropDown = ({ options, handleComboBox = () => {} }) => {
+export const DropDown = ({ options, handleComboBox = () => {}, selectedIdx }) => {
   return (
     <DropDownContainer>
       {/* TODO : input 값에 맞는 autocomplete 선택 옵션이 보여지는 역할을 합니다. */}
       {options.map((option, idx) => {
         return ( 
-          <li key={idx} onClick={() => handleComboBox(option)}>
+          <li key={idx} onClick={() => handleComboBox(option)} className={selectedIdx === idx ? "selected" : null}>
             {option}
           </li>
         )
