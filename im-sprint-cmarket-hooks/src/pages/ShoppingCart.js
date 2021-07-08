@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CartItem from '../components/CartItem'
 import OrderSummary from '../components/OrderSummary'
 
-export default function ShoppingCart({ items, cartItems }) {
+export default function ShoppingCart({ items, cartItems, handleDeleteCartItems = () => {}, handleQuantityOfCartItems = () => {} }) {
   const [checkedItems, setCheckedItems] = useState(cartItems.map((el) => el.itemId))
 
   const handleCheckChange = (checked, id) => {
@@ -24,32 +24,30 @@ export default function ShoppingCart({ items, cartItems }) {
   };
 
   const handleQuantityChange = (quantity, itemId) => {
+    handleQuantityOfCartItems(quantity, itemId);
   }
 
   const handleDelete = (itemId) => {
-    setCheckedItems(checkedItems.filter((el) => el !== itemId))
+    setCheckedItems(checkedItems.filter((el) => el !== itemId));
+    handleDeleteCartItems(itemId);
   }
 
   const getTotal = () => {
-    let cartIdArr = cartItems.map((el) => el.itemId)
-    let total = {
+    const total = {
       price: 0,
-      quantity: 0,
+      quantity: 0
+    };
+    for (let i = 0; i < cartItems.length; i++) {
+      let quantity = cartItems[i].quantity;
+      let price = items.filter((el) => el.id === cartItems[i].itemId)[0].price;
+      total.price = total.price + quantity * price;
+      total.quantity = total.quantity + quantity;
     }
-    for (let i = 0; i < cartIdArr.length; i++) {
-      if (checkedItems.indexOf(cartIdArr[i]) > -1) {
-        let quantity = cartItems[i].quantity
-        let price = items.filter((el) => el.id === cartItems[i].itemId)[0].price
-
-        total.price = total.price + quantity * price
-        total.quantity = total.quantity + quantity
-      }
-    }
-    return total
+    return total;
   }
 
-  const renderItems = items.filter((el) => cartItems.map((el) => el.itemId).indexOf(el.id) > -1)
-  const total = getTotal()
+  const renderItems = items.filter((el) => cartItems.map((el) => el.itemId).indexOf(el.id) > -1);
+  const total = getTotal();
 
   return (
     <div id="item-list-container">

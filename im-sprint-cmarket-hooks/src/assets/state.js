@@ -54,14 +54,6 @@ export const initialState =
     {
       "itemId": 1,
       "quantity": 1
-    },
-    {
-      "itemId": 5,
-      "quantity": 7
-    },
-    {
-      "itemId": 2,
-      "quantity": 3
     }
   ]
 }

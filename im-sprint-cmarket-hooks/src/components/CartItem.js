@@ -31,7 +31,7 @@ export default function CartItem({
         className="cart-item-quantity"
         value={quantity}
         onChange={(e) => {
-          handleQuantityChange(Number(e.target.value), item.id)
+          handleQuantityChange(Number(e.target.value), item.id);
         }}>
       </input>
       <button className="cart-item-delete" onClick={() => { handleDelete(item.id) }}>삭제</button>
