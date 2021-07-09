@@ -4,7 +4,7 @@ export default function Toast({ text, dismissTime }) {
   const [isFading, setIsFading] = useState(false)
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     setTimeout(() => {
       if (mounted) {
         setIsFading(true)
@@ -12,7 +12,7 @@ export default function Toast({ text, dismissTime }) {
     }, dismissTime - 500)
 
     return () => {
-      mounted = false
+      mounted = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

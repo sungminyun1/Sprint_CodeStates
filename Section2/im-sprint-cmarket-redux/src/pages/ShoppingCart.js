@@ -8,11 +8,11 @@ export default function ShoppingCart() {
 
   const state = useSelector(state => {
     console.log(state);
-    return state.itemReducer
+    return state.itemReducer;
   });
   const { cartItems, items } = state;
   const dispatch = useDispatch();
-  const [checkedItems, setCheckedItems] = useState(cartItems.map((el) => el.itemId))
+  const [checkedItems, setCheckedItems] = useState(cartItems.map((el) => el.itemId));
 
   const handleCheckChange = (checked, id) => {
     if (checked) {
@@ -44,19 +44,16 @@ export default function ShoppingCart() {
   }
 
   const getTotal = () => {
-    let cartIdArr = cartItems.map((el) => el.itemId)
-    let total = {
+    const total = {
       price: 0,
       quantity: 0,
     }
-    for (let i = 0; i < cartIdArr.length; i++) {
-      if (checkedItems.indexOf(cartIdArr[i]) > -1) {
-        let quantity = cartItems[i].quantity
-        let price = items.filter((el) => el.id === cartItems[i].itemId)[0].price
+    for (let i = 0; i < cartItems.length; i++) {
+      let quantity = cartItems[i].quantity
+      let price = items.filter((el) => el.id === cartItems[i].itemId)[0].price
 
-        total.price = total.price + quantity * price
-        total.quantity = total.quantity + quantity
-      }
+      total.price = total.price + quantity * price
+      total.quantity = total.quantity + quantity
     }
     return total
   }

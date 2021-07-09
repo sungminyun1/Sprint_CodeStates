@@ -37,11 +37,11 @@ export const setQuantity = (itemId, quantity) => {
 }
 
 export const notify = (message, dismissTime = 5000) => dispatch => {
-  const uuid = Math.random()
-  dispatch(enqueueNotification(message, dismissTime, uuid))
+  const uuid = Math.random();
+  dispatch(enqueueNotification(message, dismissTime, uuid));
   setTimeout(() => {
     dispatch(dequeueNotification())
-  }, dismissTime)
+  }, dismissTime);
 }
 
 export const enqueueNotification = (message, dismissTime, uuid) => {
