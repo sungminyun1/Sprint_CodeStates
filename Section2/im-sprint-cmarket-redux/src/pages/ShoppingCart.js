@@ -6,8 +6,11 @@ import OrderSummary from '../components/OrderSummary'
 
 export default function ShoppingCart() {
 
-  const state = useSelector(state => state.itemReducer);
-  const { cartItems, items } = state
+  const state = useSelector(state => {
+    console.log(state);
+    return state.itemReducer
+  });
+  const { cartItems, items } = state;
   const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState(cartItems.map((el) => el.itemId))
 
