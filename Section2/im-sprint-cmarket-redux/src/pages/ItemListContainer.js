@@ -12,6 +12,7 @@ function ItemListContainer() {
     if (!cartItems.map((el) => el.itemId).includes(item.id)) {
       //TODO: dispatch 함수를 호출하여 아이템 추가에 대한 액션을 전달하세요.
       dispatch(notify(`장바구니에 ${item.name}이(가) 추가되었습니다.`))
+      dispatch(addToCart(item.id));
     }
     else {
       dispatch(notify('이미 추가된 상품입니다.'))
