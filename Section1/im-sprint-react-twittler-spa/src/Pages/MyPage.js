@@ -2,12 +2,13 @@ import React from 'react';
 import { dummyTweets } from '../static/dummyData';
 import './MyPage.css';
 // ! 위 코드는 수정하지 않습니다.
-
+import Tweet from '../Components/Tweet';
+import Footer from '../Footer';
 // TODO - import문을 이용하여 Tweet, Footer 컴포넌트를 불러옵니다.
 
 const MyPage = () => {
   // TODO - filter 메소드를 이용하여 username이 kimcoding인 요소만 있는 배열을 filteredTweet에 할당합니다.
-  const filteredTweets = dummyTweets;
+  const filteredTweets = dummyTweets.filter((el) => el.username === 'kimcoding');
 
   return (
     <section className="myInfo">
@@ -25,9 +26,10 @@ const MyPage = () => {
         </div>
       </div>
       <ul className="tweets__mypage">
-        TODO : kimcoding 이 작성한 트윗 메세지만 있어야 합니다.
+        {filteredTweets.map((el) => 
+          <Tweet key={el.id} tweet={el} />)}
       </ul>
-      TODO : Footer 컴포넌트를 작성합니다.
+      <Footer />
     </section>
   );
 };

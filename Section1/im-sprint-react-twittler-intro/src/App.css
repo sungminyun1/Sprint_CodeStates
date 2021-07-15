@@ -228,3 +228,7 @@ main {
 .tweet__message {
   padding: 0.5rem;
 }
+
+.tweet__username--purple {
+  background-color: rgb(235, 229, 249);
+}

@@ -1,3 +1,56 @@
-.hide {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: whitesmoke
+}
+
+/* 숨김 */
+.hide, .rgBtn {
   display: none;
+}
+
+.failure-message, .mismatch-message, .short-message, .onlyEngNum, .weak-message {
+  color: tomato;
+  font-weight: bold;
+}
+
+.success-message, .success-password, .success-password-retype {
+  color: yellowgreen;
+  font-weight: bold;
+}
+
+/*? 기본 회원가입 버튼 ?*/
+#deco {
+  background-color: whitesmoke;
+  color: black;
+  border: 1px solid gray;
+  opacity: 50%;
+  border-bottom: 2.5px solid rgb(103, 107, 116);
+  border-right: 2px solid rgb(103, 107, 116);;
+}
+
+/*? 활성화된 회원가입 버튼 ?*/
+#btn {
+  background-color: whitesmoke;
+  color: black;
+  border: 1px solid gray;
+  border-bottom: 2.5px solid rgb(103, 107, 116);
+  border-right: 2px solid rgb(103, 107, 116);;
+}
+
+#btn:hover {
+  background-color: aqua;
+  border: 1px solid blue;
+  border-bottom: 2.5px solid blue;
+  border-right: 2px solid blue;
+  cursor: pointer;
+}
+
+#btn:active {
+  position: relative;
+  top: 2px;
+  border-bottom: 1.5px solid blue;
+  border-right: 1px solid blue;
 }
