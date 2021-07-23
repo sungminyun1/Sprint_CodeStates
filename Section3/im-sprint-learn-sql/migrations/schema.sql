@@ -24,7 +24,7 @@ CREATE TABLE `content` (
 -- PART 5:
 -- 아래 주석을 제거하고 category, content_category, role 테이블을 만드세요.
 
-/*
+
 CREATE TABLE `category` (
   -- TODO:
 );
@@ -42,4 +42,3 @@ CREATE TABLE `role` (
 
 ALTER TABLE `user` ADD roleId int;
 ALTER TABLE `user` ADD FOREIGN KEY (`roleId`) REFERENCES `role` (`id`);
-*/
