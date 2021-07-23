@@ -23,7 +23,7 @@ module.exports = class DatabaseConnector extends SingletonBase {
     this.config = {
       host: 'localhost',
       user: process.env.DATABASE_USERNAME || 'root',
-      password: process.env.DATABASE_PASSWORD || 'Kim1234567#@!',
+      password: process.env.DATABASE_PASSWORD || '',
       database: process.env.DATABASE_NAME || 'learnmysql'
     };
 

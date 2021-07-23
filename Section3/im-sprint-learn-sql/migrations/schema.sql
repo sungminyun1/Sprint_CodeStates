@@ -25,20 +25,20 @@ CREATE TABLE `content` (
 -- 아래 주석을 제거하고 category, content_category, role 테이블을 만드세요.
 
 
-CREATE TABLE `category` (
-  -- TODO:
-);
+-- CREATE TABLE `category` (
+--   -- TODO:
+-- );
 
 
-CREATE TABLE `content_category` (
-  -- TODO:
-);
+-- CREATE TABLE `content_category` (
+--   -- TODO:
+-- );
 
 
-CREATE TABLE `role` (
-  -- TODO:
-);
+-- CREATE TABLE `role` (
+--   -- TODO:
+-- );
 
 
-ALTER TABLE `user` ADD roleId int;
-ALTER TABLE `user` ADD FOREIGN KEY (`roleId`) REFERENCES `role` (`id`);
+-- ALTER TABLE `user` ADD roleId int;
+-- ALTER TABLE `user` ADD FOREIGN KEY (`roleId`) REFERENCES `role` (`id`);
