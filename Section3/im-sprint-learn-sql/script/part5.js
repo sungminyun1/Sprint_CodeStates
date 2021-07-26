@@ -102,7 +102,7 @@ where category.name = 'soccer'`;
 ----------------------------------------------------------------------------------------------
     TODO: Q 5-2-9. duRiCha가 작성한 글의 개수 (컬럼명: ContentCount)를 출력하기 위한 SQL을 작성해주세요.
 */
-const PART5_2_9 = `select count(title) as ContentCount
+const PART5_2_9 = `select count(content.title) as ContentCount
 from content
 join user on content.userId = user.id
 where user.name = 'duRiCha'`;
@@ -111,7 +111,7 @@ where user.name = 'duRiCha'`;
 ----------------------------------------------------------------------------------------------
     TODO: Q 5-2-10. 각 user(컬럼명: name)가 작성한 글의 개수 (컬럼명: ContentCount)를 출력하기 위한 SQL을 작성해주세요.
 */
-const PART5_2_10 = `select user.name as name, count(title) as ContentCount
+const PART5_2_10 = `select user.name as name, count(content.title) as ContentCount
 from user
 left join content on content.userId = user.id
 group by user.name`;
