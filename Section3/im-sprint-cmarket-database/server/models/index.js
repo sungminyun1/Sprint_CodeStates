@@ -11,9 +11,9 @@ module.exports = {
       where orders.user_id = ${userId}`
       db.query(sql, function(err, result) {
         if(err) {
-          throw err;
+          callback(err, null);
         }
-        callback(err, result);
+        callback(null, result);
       })
     },
     post: (userId, orders, totalPrice, callback) => {
@@ -21,16 +21,16 @@ module.exports = {
       const sql1 = `insert into orders (user_id, total_price) values (${userId}, ${totalPrice})`
       db.query(sql1, (err, result) => {
         if(err) {
-          throw err;
+          callback(err, null);
         } else {
           const sql2 = `insert into order_items (order_id, item_id, order_quantity) values ?`
           const id = result.insertId;
           const params = orders.map((el) => [id, el.itemId, el.quantity]);
           db.query(sql2, [params], (err, result) => {
             if(err) {
-              throw err;
+              callback(err, null);
             }
-            callback(err, result);
+            callback(null, result);
           })
         }
       })
@@ -42,9 +42,9 @@ module.exports = {
       const sql = `select * from items`
       db.query(sql, (err, result) => {
         if(err) {
-          throw err;
+          callback(err, null);
         }
-        callback(err, result);
+        callback(null, result);
       })
     }
   }
