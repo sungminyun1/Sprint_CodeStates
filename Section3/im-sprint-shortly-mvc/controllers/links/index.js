@@ -1,17 +1,27 @@
-const db = require('../../models/index').url;
+const db = require('../../models/index');
 const { getUrlTitle, isValidUrl } = require('../../modules/utils');
 
 module.exports = {
     get: async (req, res) => {
-        const data = await db.findAll();
-        res.status(200).json(data);
+        try {
+            const data = await db.url.findAll();
+            res.status(200).json(data);
+        } catch(err) {
+            console.log(err);
+            res.status(500).send('Sorry, Not Found.');
+        }
     },
 
     getById: async (req, res) => {
         const id = req.params.id;
-        const data = await db.findByPk(id);
-        const result = await data.increment("visits", {by: 1});
-        res.status(302).redirect(result.url);
+        try {
+            const data = await db.url.findByPk(id);
+            const result = await data.increment("visits", {by: 1});
+            res.status(302).redirect(result.url);
+        } catch(err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
     },
 
     post: (req, res) => {
@@ -23,12 +33,18 @@ module.exports = {
             if(err) {
                 res.status(404).send('Bad Request');
             } else {
-                db.create({
-                    url: url,
-                    title: title
-                })
-                .then((result) => {
-                    res.status(201).json(result);
+                db.url.findOrCreate({
+                    where: {url: url},
+                    defaults: {
+                        title: title
+                    }
+                }) 
+                .then(([result, created]) => {
+                    if(!created) {
+                        res.status(201).json(result);  // 이미 존재하기 때문에 find한 데이터
+                    } else {
+                        res.status(201).json(result);  // 새로 create
+                    }
                 })
                 .catch((err) => {
                     console.log(err);

@@ -34,4 +34,9 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// 관계 설정 방법 (1)
+const { url, user } = sequelize.models;
+url.belongsTo(user);
+user.hasMany(url);
+
 module.exports = db;
