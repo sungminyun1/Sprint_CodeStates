@@ -1,0 +1,8 @@
+node_modules
+.env
+cert.pem
+key.pem
+localhost*
+
+*package-lock.json
+*.pem
