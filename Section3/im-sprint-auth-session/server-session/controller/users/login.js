@@ -16,7 +16,7 @@ module.exports = {
     } else {
       // HINT: req.session을 사용하세요.
       req.session.userId = userInfo.userId;
-      res.status(200).json({ data: userInfo, message: 'ok' });
+      res.status(200).json({ message: 'ok' });
     }
   }
 }
